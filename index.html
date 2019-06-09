@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>苹果iOS10样式背景图片视觉差效果jquery插件</title>
+
+<link rel="stylesheet" type="text/css" href="http://apps.bdimg.com/libs/bootstrap/3.3.4/css/bootstrap.css">
+<link rel="stylesheet" href="css/style.css"/>
+
+</head>
+<body>
+
+<div id="top-image">
+  <div id="content" class="container center-block">
+    <div class="jumbotron">
+      <div class="container">
+        <h1>搜索功能</h1>
+        <p>这是一个简单的实例演示，呼吁更多的关注，精选内容或信息的简单的大屏幕式组件。</p>
+        <div class="input-group input-group-lg"> <span class="input-group-addon" id="sizing-addon1"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></span>
+          <input type="text" class="form-control" placeholder="输入关键词" aria-describedby="sizing-addon1" id="myInput" onkeyup="checkUserType()"/>
+          <span class="input-group-btn">
+          <button class="btn btn-default" type="button">搜 索</button>
+          </span> </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+    function myFunction() {
+
+         var x = document.getElementById("myInput").value;
+
+        $.ajax({
+            type: "post",
+            url: "localhost:8080/try/user",
+//      data: "para="+para,  此处data可以为 a=1&b=2类型的字符串 或 json数据。
+            data: {"number":x},
+            cache: false,
+            async : false,
+            dataType: "json",
+            success: function (data)
+            {
+                if("1"==data){
+                    alert("合法！");
+                    return true;
+                }else{
+                    alert("不合法！错误信息如下："+data.errorMsg);
+                    return false;
+                }
+            },
+            error:function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("请求失败！");
+            }
+        });
+    }
+</script>
+
+
+<script type="text/javascript">
+
+
+    var timerId = 0; // 全局变量用于标识是否延时执行keyup事件
+    // 检查用户输入
+    // 原理：window.setTimeout 是延迟执行的，只要在 window.setTimeout 执行之前，把此执行取消（window.clearTimeout）掉就可以了。
+    function checkUserType() {
+        if (timerId) {
+            clearTimeout(timerId); // 如果 timerId 是存在，就清除此 timer。
+            timerId = 0;
+        }
+
+
+        //延时1000ms执行请求事件，如果感觉时间长了，就用合适的时间
+        //只要有输入则不执行keyup事件
+        timerId = setTimeout(function(){
+// 这里面就是调用的请求，我这里做了一个模拟。
+// TODO: ajax method.
+            var x =document.getElementById("myInput").value ;
+            console.log(x);
+            if(x==""){
+                return;
+            }
+            else{
+                $.ajax({
+                    type: "GET",
+                    url: "http://127.0.0.1:8080/try/user",
+//      data: "para="+para,  此处data可以为 a=1&b=2类型的字符串 或 json数据。
+                    data: {"number":x},
+                    cache: false,
+                    async : false,
+                    dataType: "json",
+                    success: function (data)
+                    {
+                        if("1"==data){
+                            alert("合法！");
+                            return true;
+                        }else{
+                            alert("不合法！错误信息如下："+data.errorMsg);
+                            return false;
+                        }
+                    },
+                    error:function (XMLHttpRequest, textStatus, errorThrown) {
+                        alert("请求失败！");
+                    }
+                });
+            }
+            }, 1000);
+    }
+</script>
+<script src="js/jquery.min.js"></script>
+<script src="js/ios-parallax.js"></script> 
+<script type="text/javascript">
+$(document).ready(function() {
+  $('#top-image').iosParallax({
+	movementFactor: 50
+  });
+});
+</script>
+
+</body>
+</html>
