@@ -4,13 +4,11 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>苹果iOS10样式背景图片视觉差效果jquery插件</title>
+<title>智能云识别系统</title>
 <link rel="stylesheet" type="text/css" href="http://apps.bdimg.com/libs/bootstrap/3.3.4/css/bootstrap.css">
 <link rel="stylesheet" href="css/style.css"/>
-
 </head>
 <body>
-
 <div id="top-image">
   <div id="content" class="container center-block">
     <div class="jumbotron">
@@ -20,46 +18,13 @@
         <div class="input-group input-group-lg"> <span class="input-group-addon" id="sizing-addon1"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></span>
           <input type="text" class="form-control" placeholder="输入关键词" aria-describedby="sizing-addon1" id="myInput" onkeyup="checkUserType()"/>
           <span class="input-group-btn">
-          <button class="btn btn-default" type="button">搜 索</button>
+          <button class="btn btn-default" type="button">自动搜索</button>
           </span> </div>
       </div>
     </div>
   </div>
 </div>
-<script>
-    function myFunction() {
-
-         var x = document.getElementById("myInput").value;
-
-        $.ajax({
-            type: "post",
-            url: "localhost:8080/try/user",
-//      data: "para="+para,  此处data可以为 a=1&b=2类型的字符串 或 json数据。
-            data: {"number":x},
-            cache: false,
-            async : false,
-            dataType: "json",
-            success: function (data)
-            {
-                if("1"==data){
-                    alert("合法！");
-                    return true;
-                }else{
-                    alert("不合法！错误信息如下："+data.errorMsg);
-                    return false;
-                }
-            },
-            error:function (XMLHttpRequest, textStatus, errorThrown) {
-                alert("请求失败！");
-            }
-        });
-    }
-</script>
-
-
 <script type="text/javascript">
-
-
     var timerId = 0; // 全局变量用于标识是否延时执行keyup事件
     // 检查用户输入
     // 原理：window.setTimeout 是延迟执行的，只要在 window.setTimeout 执行之前，把此执行取消（window.clearTimeout）掉就可以了。
@@ -68,8 +33,6 @@
             clearTimeout(timerId); // 如果 timerId 是存在，就清除此 timer。
             timerId = 0;
         }
-
-
         //延时1000ms执行请求事件，如果感觉时间长了，就用合适的时间
         //只要有输入则不执行keyup事件
         timerId = setTimeout(function(){
@@ -92,22 +55,22 @@
                     success: function (data)
                     {
                         if("1"==data){
-                            layer.msg('存在。。', {icon: 6});
+                            layer.msg('存在', {icon: 6});
                             document.getElementById('myInput').value = "";
                             return true;
                         }else{
-                            layer.msg('不存在。。', {icon: 5});
+                            layer.msg('不存在', {icon: 5});
                             document.getElementById('myInput').value = "";
                             return false;
                         }
                     },
                     error:function (XMLHttpRequest, textStatus, errorThrown) {
-                        layer.msg('数据库连接错误或程序错误。。', {icon: 5});
+                        layer.msg('数据库连接错误或程序错误', {icon: 5});
                         document.getElementById('myInput').value = "";
                     }
                 });
             }
-            }, 1000);
+            }, 300);
     }
 </script>
 <script src="js/jquery.min.js"></script>
