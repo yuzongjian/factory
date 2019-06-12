@@ -44,7 +44,7 @@ public class tools {
      * 6)return:返回一个SerialPort一个实例对象，若判定该com口是串口则进行参数配置
      *   若不是则返回SerialPort对象为null
      */
-    public static final SerialPort portParameterOpen(String portName,int baudrate) {
+    public static final SerialPort portParameterOpen (String portName,int baudrate)throws Exception{
         SerialPort serialPort=null;
         try {  //通过端口名识别串口
             CommPortIdentifier portIdentifier = CommPortIdentifier.getPortIdentifier(portName);

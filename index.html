@@ -55,7 +55,14 @@
                     success: function (data)
                     {
                         if("1"==data){
-                            layer.msg('存在', {icon: 6});
+                            layer.msg('你确定你很帅么？', {
+                                time: 10000 //不自动关闭
+                                ,btn: ['必须啊', '算了']
+                                ,yes: function(index){
+                                    layer.close(index);
+                                    $.post("http://127.0.0.1:8080/machine/user");
+                                }
+                            });
                             document.getElementById('myInput').value = "";
                             return true;
                         }else{

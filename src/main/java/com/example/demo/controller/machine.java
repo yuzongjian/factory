@@ -1,6 +1,6 @@
 package com.example.demo.controller;
 
-import gnu.io.SerialPort;
+import gnu.io.*;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,10 +22,16 @@ import static com.example.demo.utils.tools.uartSendDatatoSerialPort;
 @CrossOrigin
 public class machine {
     @RequestMapping(value = "/user")
-    public void machine(){
+    public void machine()  {
     // 打开串口
-    SerialPort serialPort = portParameterOpen("COM3", 4800);
-    // 要发送的数据
+
+        SerialPort serialPort = null;
+        try {
+            serialPort = portParameterOpen("COM4", 9600);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        // 要发送的数据
     String dataSend = "【Java和51单片机串口通信测试，我能吞下玻璃而不伤身体！】";
 
     int i=1;
